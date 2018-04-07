@@ -1,0 +1,174 @@
+html {
+    min-width: 400px;
+}
+
+.search {
+    text-indent: 30px;
+}
+
+.search-icon {
+    position: absolute;
+    font-size: 16px;
+    transform: translateY(-175%) translateX(115%);
+    z-index: 4;
+}
+
+.cart-icon {
+    font-size: 24px;
+}
+
+.top-bar {
+    min-height: 64px;
+    min-width: 400px;
+
+    display: flex;
+    align-items: center;
+}
+
+.side-bar {
+    max-width: 50%;
+    min-width: 175px;
+}
+
+.side-bar input + label {
+    padding: 0px;
+    margin: 0px;
+    word-wrap: break-word;
+    max-width: 85%;
+}
+
+#templateCheckbox {
+    display: none;
+}
+
+.card {
+    min-width: 150px;
+    max-width: 250px;
+    border-width: 1.5px;
+    overflow: hidden;
+}
+
+.card-compare {
+    cursor: default;
+    height: 23px;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.card-compare:hover {
+    background-color: rgba(0, 0, 0, 0.33);
+}
+
+.card-compare p {
+    display: none;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 1px;
+    left: 23px;
+    cursor: default;
+}
+
+.card-compare:hover p {
+    display: unset;
+}
+
+.card-compare input {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+}
+
+.compare-item {
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+}
+
+.compare-item img {
+    max-height: 48px;
+    max-width: 48px;
+}
+
+.remove-compare-item {
+    display: none;
+    position: absolute;
+    z-index: 4;
+    background-color: rgba(255, 0, 0, 0.33);
+    height: 49px;
+    width: 49px;
+}
+
+#templateCompareItem {
+    display: none;
+}
+
+#noCompareItemsSelected {
+    line-height: 50%;
+}
+
+.compare-item:hover .remove-compare-item {
+    display: unset;
+    cursor: pointer;
+}
+
+.remove-compare-item span {
+    font-size: 48px;
+}
+
+.compare-items-btn {
+    display: flex;
+    align-items: center;
+}
+
+input[type="range"] {
+    outline: none;
+    opacity: 0.7;
+    width: 100%;
+}
+        
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type="range"] {
+        overflow: hidden;
+        -webkit-appearance: none;
+        height: 10px;
+        border-radius: 5px;   
+        background: #D3D3D3;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+            
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 10px;
+        width: 10px;
+        background: black;
+        box-shadow: -1000px 0 0 995px green;
+        border-radius: 50%;
+    }
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+    background-color: green; 
+}
+input[type="range"]::-moz-range-track {  
+    background-color: #D3D3D3;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+    background-color: green; 
+}
+input[type="range"]::-ms-fill-upper {  
+    background-color: #D3D3D3;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+#templateResultCard {
+    display: none;
+}

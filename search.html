@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- JQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>FitMe - Search</title>
+
+    <link href="css/search.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        var compareItems = [];
+        var filters = {};
+        var maxPrice = 0.0;
+
+        var allData = [
+            {
+                id: "skyBlueShirt0",
+                name: "Magellan Outdoors Men's Laguna Madre Solid Short Sleeve Fishing Shirt",
+                price: 17.99,
+                gender: "male",
+                age: "adult",
+                colors: ["Sky blue"],
+                brand: "Magellan Outdoors",
+                materials: ["Nylon"],
+                images: ["https://assets.academy.com/mgen/50/10740350.jpg"],
+                tooltip: "Perfect fit",
+                moreInfo: "https://www.academy.com/shop/pdp/magellan-outdoors%E2%84%A2-mens-laguna-madre-solid-short-sleeve-fishing-shirt?storeId=10151&catalogId=10051"
+            },
+            {
+                id: "aqua0",
+                name: "Amazon Essentials Men's Regular-Fit Quick-Dry Golf Polo Shirt",
+                price: 15.00,
+                gender: "male",
+                age: "junior",
+                colors: ["Aqua", "Coral", "Deep Teal", "Electric Blue", 'Light Blue'],
+                brand: "Amazon",
+                materials: ["Polyster"],
+                images: ["https://images-na.ssl-images-amazon.com/images/I/91MR26Sa4zL._UL1500_.jpg"],
+                tooltip: undefined,
+                moreInfo: "https://www.amazon.com/Amazon-Essentials-Regular-Fit-Quick-Shirt/dp/B01IXFTQCG"
+            }
+        ];
+        var currentData = [];
+
+        function findIndex(id) {
+            for (var i = 0; i < currentData.length; i++) {
+                if (currentData[i].id === id)
+                    return i;
+            }
+            return -1;
+        }
+
+        function resetupCurrentSliderDisplay() {
+            maxPrice = parseFloat($("#priceSlider").val());
+            $("#currentPriceSliderDisplay").html("$" + maxPrice.toFixed(2));
+        }
+
+        $(document).on("input", "#priceSlider", function(event) {
+            resetupCurrentSliderDisplay();
+            updateResultsWithFilters();
+        });
+
+        function resetupCompareItems() {
+            var currentCompareItemsDiv = $("#compare-items");
+            var compareItemButton = $(".compare-items-btn input[type='submit']").first();
+            currentCompareItemsDiv.empty(); // clear current div
+            if (compareItems.length == 0) {
+                $("#noCompareItemsSelected").show();
+                compareItemButton.hide();
+                currentCompareItemsDiv.hide();
+            } else {
+                var templateCompareItem = $("#templateCompareItem");
+                for (var i = 0; i < compareItems.length; i++) {
+                    var compareItem = compareItems[i];
+                    if (compareItem != undefined) {
+                        var newCompareItem = templateCompareItem.clone().attr("id", "compareItem" + compareItem.id);
+                        newCompareItem.find("img").first().attr("src", compareItem.images[0]).attr("alt", compareItem.name);
+                        currentCompareItemsDiv.append(newCompareItem);
+                    }
+                }
+
+                $("#noCompareItemsSelected").hide();
+                if (compareItems.length <= 1)
+                    compareItemButton.prop("disabled", true);
+                else
+                    compareItemButton.prop("disabled", false);
+                compareItemButton.removeClass("d-none").show();
+                currentCompareItemsDiv.removeClass("d-none").show();
+            }
+        }
+
+        $(document).on("change", ".card-compare input[type='checkbox']", function(event) {
+            var dataIndex = findIndex(event.currentTarget.value);
+            if (dataIndex > -1) {
+                var index = compareItems.indexOf(currentData[dataIndex]);
+                if (event.currentTarget.checked && index == -1) {
+                    if (compareItems.length >= 3) {
+                        event.currentTarget.checked = false;
+                        alert("Comparison list is full, please remove an item before adding new items to the list.");
+                    } else {
+                        compareItems.push(currentData[dataIndex]);
+                    }
+                } else if (!event.currentTarget.checked && index > -1) {
+                    compareItems.splice(index, 1);
+                }
+                resetupCompareItems();
+            }
+        });
+
+        $(document).on("click", ".compare-item", function(event) {
+            var removeItemId = event.currentTarget.id;
+            var compareItemPrefix = "compareItem";
+            var prefixIndex = removeItemId.indexOf(compareItemPrefix);
+            if (prefixIndex >= 0) {
+                removeItemId = removeItemId.substring(prefixIndex + compareItemPrefix.length);
+                $("#resultItem" + removeItemId).find(".card-compare input[type='checkbox']").first().prop("checked", false);
+                for (var i = 0; i < compareItems.length; i++) {
+                    if (compareItems[i].id === removeItemId) {
+                        compareItems.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+            resetupCompareItems();
+        });
+
+        function resetupResults(data) {
+            currentData = data;
+            var searchResultsDiv = $("#search-results");
+            searchResultsDiv.empty();
+            if (data.length == 1)
+                $("#numResults").text("1 result");
+            else
+                $("#numResults").text(data.length + " results");
+            $("#searchQuery").text("Shirt");
+            var templateResultCard = $("#templateResultCard");
+            for (var i = 0; i < data.length; i++) {
+                var currentItem = data[i];
+                if (currentItem != undefined) {
+                    var newResultCard = templateResultCard.clone().attr("id", "resultItem" + currentItem.id);
+                    newResultCard.find(".card-compare input[type='checkbox']").first().val(currentItem.id).attr("aria-label", "compare " + currentItem.name);
+                    newResultCard.find(".card-img-top").first().attr("src", currentItem.images[0]).attr("alt", currentItem.name);
+                    newResultCard.find(".card-body .card-text").first().text(currentItem.name);
+                    newResultCard.find(".card-body .card-item-price").first().text("$" + currentItem.price.toFixed(2));
+                    if (currentItem.tooltip != undefined)
+                        newResultCard.find(".card-item-tooltip").first().removeClass("d-none").text(currentItem.tooltip);
+                    searchResultsDiv.append(newResultCard);
+                }
+            }
+        }
+
+        function resetupGroup(groupName, allDisplayName, groupOptions) {
+            var templateCheckbox = $("#templateCheckbox");
+            var newAllGroupDiv = templateCheckbox.clone().attr("id", groupName + "AllDiv");
+            var allGroup = newAllGroupDiv.find("input").first().attr("id", groupName + "-All").val(groupName + "-All").attr("aria-label", "all " + groupName).prop("checked", true);
+            var allGroupLabel = newAllGroupDiv.find("label").first().attr("for", groupName + "All").text(allDisplayName);
+            var groupOptionDiv = $("#" + groupName + " div");
+            groupOptionDiv.empty(); // remove all previous options
+            groupOptionDiv.append(newAllGroupDiv);
+            for (var i = 0; i < groupOptions.length; i++) {
+                var groupOptionName = groupOptions[i].replace(/ /g, "_");
+                var groupOptionsId = groupName + "-" + groupOptionName;
+                var newGroupOptionDiv = templateCheckbox.clone().attr("id", groupOptionsId + "Div");
+                var newGroupOption = newGroupOptionDiv.find("input").first().attr("id", groupOptionsId).val(groupOptionsId).attr("aria-label", groupName + " " + groupOptions[i]);
+                var newGroupOptionLabel = newGroupOptionDiv.find("label").first().attr("for", groupOptionsId).text(groupOptions[i]);
+                groupOptionDiv.append(newGroupOptionDiv);
+            }
+
+            filters[groupName] = ["All"];
+        }
+
+        function setupSideBarConfiguration() {
+            var min = 0.0, max = 0.01;
+            var genders = [];
+            var ages = [];
+            var colors = [];
+            var brands = [];
+            var materials = [];
+            
+            if (currentData.length > 0) {
+                min = currentData[0].price;
+                max = currentData[0].price;
+                for (var i = 0; i < currentData.length; i++) {
+                    // Price
+                    var currentPrice = currentData[i].price;
+                    if (currentPrice < min)
+                        min = currentPrice;
+                    if (currentPrice > max)
+                        max = currentPrice;
+
+                    // Gender
+                    if (currentData[i].gender != undefined) {
+                        var currentGender = currentData[i].gender;
+                        if (!genders.includes(currentGender))
+                            genders.push(currentGender);
+                    }
+
+                    // Age
+                    if (currentData[i].age != undefined) {
+                        var currentAge = currentData[i].age;
+                        if (!ages.includes(currentAge))
+                            ages.push(currentAge);
+                    }
+
+                    // Color
+                    if (currentData[i].colors != undefined) {
+                        for (var j = 0; j < currentData[i].colors.length; j++) {
+                            var currentColor = currentData[i].colors[j];
+                            if (!colors.includes(currentColor))
+                                colors.push(currentColor);
+                        }
+                    }
+
+                    // Brand
+                    if (currentData[i].brand != undefined) {
+                        var currentBrand = currentData[i].brand;
+                        if (!brands.includes(currentBrand))
+                            brands.push(currentBrand);
+                    }
+
+                    // Material
+                    if (currentData[i].materials != undefined) {
+                        for (var j = 0; j < currentData[i].materials.length; j++) {
+                            var currentMaterial = currentData[i].materials[j];
+                            if (!materials.includes(currentMaterial))
+                                materials.push(currentMaterial)
+                        }
+                    }
+                }
+
+                if (min == max) {
+                    max = min + 0.01;
+                }
+            }
+
+            // Price
+            var priceSlider = $("#priceSlider");
+            priceSlider.prop("min", min);
+            priceSlider.prop("max", max);
+            priceSlider.prop("value", max);
+            resetupCurrentSliderDisplay();
+
+            // resetup different groups
+            resetupGroup("Gender", "N/A", genders);
+            resetupGroup("Age", "All", ages);
+            resetupGroup("Color", "All", colors);
+            resetupGroup("Brand", "All", brands);
+            resetupGroup("Material", "All", materials);
+        }
+
+        function getItemPropertyNameForGroup(group) {
+            if (group === "Gender")
+                return "gender";
+            else if (group === "Age")
+                return "age";
+            else if (group === "Color")
+                return "colors";
+            else if (group == "Brand")
+                return "brand";
+            else if (group == "Material")
+                return "materials";
+            else
+                return "id";
+        }
+
+        function doesItemContainProperty(itemProperties, property) {
+            if (itemProperties.constructor === Array) {
+                for (var i = 0; i < itemProperties.length; i++)
+                    if (itemProperties[i] === property)
+                        return true;
+                return false;
+            } else {
+                return itemProperties === property;
+            }
+        }
+
+        function checkFilterGroup(group, item) {
+            var groupFilters = filters[group];
+            var itemPropertyName = getItemPropertyNameForGroup(group);
+            var itemProperties = item[itemPropertyName];
+            for (var i = 0; i < groupFilters.length; i++) {
+                var filterName = groupFilters[i].replace(/_/g, " ");
+                if (filterName === "All")
+                    return true;
+                else if (doesItemContainProperty(itemProperties, filterName))
+                    return true;
+            }
+            return false;
+        }
+
+        function updateResultsWithFilters(data) {
+            // update result for filters
+            var newData = data;
+            if (newData === undefined)
+                newData = [];
+            for (var i = 0; i < allData.length; i++) {
+                var currentItem = allData[i];
+                if (currentItem.price > maxPrice)
+                    continue;
+                var numMatches = 0;
+                var totalFilters = 0;
+                for (var key in filters) {
+                    totalFilters++;
+                    if (checkFilterGroup(key, currentItem))
+                        numMatches++;
+                }
+                if (numMatches == totalFilters)
+                    newData.push(currentItem);
+            }
+            resetupResults(newData);
+        }
+
+        function addOrRemoveFilter(group, target) {
+            var selected = target.value;
+            var filterName = selected.slice((group + "-").length);
+            var index = filters[group].indexOf(filterName);
+            if (target.checked && index == -1) {
+                if (filterName === "All")
+                    filters[group] = [filterName];
+                else
+                    filters[group].push(filterName);
+            } else if (!target.checked && index > -1) {
+                filters[group].splice(index, 1);
+            }
+
+            var allIndex = filters[group].indexOf("All");
+            if (filters[group].length == 0)
+                filters[group].push("All");
+            else if (filters[group].length > 1 && allIndex > -1)
+                filters[group].splice(allIndex, 1);
+        }
+
+        function resetupSidebarForFilters() {
+            for (var key in filters) {
+                $("#" + key + " div input").prop("checked", false); // uncheck all options
+                for (var i = 0; i < filters[key].length; i++) {
+                    var elemId = key + "-" + filters[key][i];
+                    $("#" + elemId).prop("checked", true); // checked ones that are filtered
+                }
+            }
+        }
+
+        $(document).on("change", ".side-bar input[type='checkbox']", function(event) {
+            var optionSelected = event.currentTarget.value;
+            if (optionSelected.indexOf("Gender-") > -1)
+                addOrRemoveFilter("Gender", event.currentTarget);
+            else if (optionSelected.indexOf("Age-") > -1)
+                addOrRemoveFilter("Age", event.currentTarget);
+            else if (optionSelected.indexOf("Color-") > -1)
+                addOrRemoveFilter("Color", event.currentTarget);
+            else if (optionSelected.indexOf("Brand-") > -1)
+                addOrRemoveFilter("Brand", event.currentTarget);
+            else if (optionSelected.indexOf("Material-") > -1)
+                addOrRemoveFilter("Material", event.currentTarget);
+            resetupSidebarForFilters();
+            updateResultsWithFilters(undefined);
+        });
+
+
+        $(document).ready(function(event) {
+            // TODO: dynamically load data based on link query parameters
+            resetupResults(allData);
+            setupSideBarConfiguration();
+            resetupCompareItems();
+        });
+
+        function getParamterForInput(selector, name) {
+            var parameter = $(selector).val();
+            if (parameter !== undefined && parameter.trim() !== "")
+                return "?" + name + "=" + parameter.trim();
+            return "";
+        }
+
+        function searchResults() {
+            window.location.href = "search.html" + getParamterForInput("#txtSearch", "s");
+        }
+
+        $(document).on("keyup", "#txtSearch", function(event) {
+            if (event.keyCode === 13)
+                searchResults();
+        });
+
+        $(document).on("click", "#btnFit", function(event) {
+            searchResults();
+        });
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row top-bar bg-light">
+            <div class="col-md-3">
+                <h1 class="text-md-left text-center">FitMe</h1>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="border border-secondary compare-item ml-md-2 ml-auto mb-sm-2 mb-md-0 mb-2 text-left" id="templateCompareItem">
+                        <div class="remove-compare-item text-center">
+                            <span class="fa fa-times"></span>
+                        </div>
+                        <img src="" alt="">
+                    </div>
+                    <div class="ml-md-2 ml-auto mb-sm-3 mb-md-auto mb-3 text-center" id="noCompareItemsSelected">
+                        No Items Selected For Comparison
+                    </div>
+                    <div id="compare-items" class="ml-md-2 ml-auto mb-sm-2 mb-md-0 mb-2 text-left d-none">
+                        <!-- Items selected for compare items go here -->
+                    </div>
+                    <div class="compare-items-btn ml-2 mr-auto mb-sm-3 mb-md-0 mb-3">
+                        <input class="btn btn-primary d-none" type="submit" value="Compare">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row text-md-right text-sm-center">
+                    <div class="col-10 text-left">
+                        <div class="input-group">
+                            <input type="text" class="form-control search" aria-label="Search Clothing Type" placeholder="Search Clothing Type" id="txtSearch">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button" id="btnFit">Fit!</button>
+                            </div>
+                        </div>
+                        <span class="fa fa-search search-icon"></span>
+                    </div>
+                    <button type="button" class="btn btn-link col-2">
+                        <span class="fa fa-shopping-cart cart-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2 bg-light m-2 side-bar">
+                <div id="price">
+                    Price: <span id="currentPriceSliderDisplay">$0.00</span>
+                    <input type="range" min="0.0" max="0.0" step="0.01" value="0.0" id="priceSlider">
+                </div>
+                <div id="templateCheckbox">
+                    <input type="checkbox" value="" id="" aria-label="">
+                    <label for=""></label>
+                </div>
+                <div id="Gender">
+                    Gender:
+                    <div class="m-0">
+                        <!-- Gender go here -->
+                    </div>
+                </div>
+                <div id="Age">
+                    Age:
+                    <div class="m-0">
+                        <!-- Age go here -->
+                    </div>
+                </div>
+                <div id="Color">
+                    Color:
+                    <div class="m-0">
+                        <!-- Colors go here -->
+                    </div>
+                </div>
+                <div id="Brand">
+                    Brand:
+                    <div class="m-0">
+                        <!-- Brand go here -->
+                    </div>
+                </div>
+                <div id="Material">
+                    Material:
+                    <div class="m-0">
+                        <!-- Material go here -->
+                    </div>
+                </div>
+            </div>
+            <div class="col m-2">
+                <div class="row">
+                    <p><span id="numResults">0 results</span> for <span id="searchQuery"></span></p>
+                </div>
+                <div class="card m-2 p-0 col-12" id="templateResultCard">
+                    <div class="card-compare">
+                        <input type="checkbox" value="" aria-label="compare">
+                        <p>Compare</p>
+                    </div>
+                    <img class="card-img-top" src="" alt="">
+                    <div class="card-body p-2">
+                        <h5 class="card-text"></h5>
+                        <h6 class="card-item-price"></h6>
+                    </div>
+                    <div class="card-footer d-none card-item-tooltip p-2">
+                        <!-- Tooltip go here -->
+                    </div>
+                </div>
+                <div id="search-results" class="row">
+                    <!-- Search results go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

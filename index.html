@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- JQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>FitMe</title>
+
+    <style>
+        #title {
+            font-size: 64px;
+        }
+
+        #subtitle {
+            font-size: 24px;
+        }
+
+        .search {
+            text-indent: 30px;
+        }
+
+        .search-icon {
+            position: relative;
+            font-size: 18px;
+            transform: translateY(-180%) translateX(100%);
+            z-index: 4;
+        }
+
+        .vertical-center {
+            min-height: 90%;
+            min-height: 90vh;
+
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var isFirstParameter = true;
+
+        function getParamterForInput(selector, name) {
+            var parameter = $(selector).val();
+            if (parameter !== undefined && parameter.trim() !== "") {
+                if (isFirstParameter) {
+                    isFirstParameter = false;
+                    return "?" + name + "=" + parameter.trim();
+                } else {
+                    return "&" + name + "=" + parameter.trim();
+                }
+            }
+            return "";
+        }
+
+        function searchResults() {
+            var linkParameters = "";
+
+            isFirstParameter = true;
+            linkParameters += getParamterForInput("#chest input", "chest");
+            linkParameters += getParamterForInput("#waist input", "waist");
+            linkParameters += getParamterForInput("#hips input", "hips");
+            linkParameters += getParamterForInput("#height input", "height");
+            linkParameters += getParamterForInput("#txtSearch", "s");
+
+            window.location.href = "search.html" + linkParameters;
+        }
+
+        $(document).on("keyup", "#txtSearch", function(event) {
+            if (event.keyCode === 13)
+                searchResults();
+        });
+
+        $(document).on("click", "#btnFit", function(event) {
+            searchResults();
+        });
+    </script>
+  </head>
+  <body>
+    <div class="vertical-center">
+        <div class="container text-center">
+            <h1 id="title">FitMe</h1>
+            <p id="subtitle">Find the Perfect Fit!</p>
+            <div class="row">
+                <div class="input-group input-group-sm col-md-3 mb-3" id="chest">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Chest</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group input-group-sm col-md-3 mb-3" id="waist">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Waist</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group input-group-sm col-md-3 mb-3" id="hips">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Hips</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+                <div class="input-group input-group-sm col-md-3 mb-3" id="height">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Height</span>
+                    </div>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control search" aria-label="Search Clothing Type" placeholder="Search Clothing Type" id="txtSearch">
+                </div>
+                <span class="fa fa-search search-icon"></span>
+            </div>
+            <div class="row">
+                <div class="input-group input-group-lg">
+                    <input class="btn btn-secondary btn-lg mx-auto" id="btnFit" type="submit" value="Fit!">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
