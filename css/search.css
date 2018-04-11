@@ -48,6 +48,10 @@ html {
     overflow: hidden;
 }
 
+.card-img-top {
+    cursor: pointer;
+}
+
 .card-compare {
     cursor: default;
     height: 23px;

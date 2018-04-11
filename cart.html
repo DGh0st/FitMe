@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- JQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>FitMe - Cart</title>
+
+    <link href="css/cart.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        var allData = [
+            {
+                id: "skyBlueShirt0",
+                name: "Magellan Outdoors Men's Laguna Madre Solid Short Sleeve Fishing Shirt",
+                price: 17.99,
+                quantity: 1,
+                gender: "male",
+                age: "adult",
+                colors: ["Sky blue"],
+                brand: "Magellan Outdoors",
+                materials: ["Nylon"],
+                images: ["https://assets.academy.com/mgen/50/10740350.jpg"],
+                tooltip: "Perfect fit",
+                moreInfo: "https://www.academy.com/shop/pdp/magellan-outdoors%E2%84%A2-mens-laguna-madre-solid-short-sleeve-fishing-shirt?storeId=10151&catalogId=10051"
+            },
+            {
+                id: "aqua0",
+                name: "Amazon Essentials Men's Regular-Fit Quick-Dry Golf Polo Shirt",
+                price: 15.00,
+                quantity: 1,
+                gender: "male",
+                age: "junior",
+                colors: ["Aqua", "Coral", "Deep Teal", "Electric Blue", 'Light Blue'],
+                brand: "Amazon",
+                materials: ["Polyster"],
+                images: ["https://images-na.ssl-images-amazon.com/images/I/91MR26Sa4zL._UL1500_.jpg"],
+                tooltip: undefined,
+                moreInfo: "https://www.amazon.com/Amazon-Essentials-Regular-Fit-Quick-Shirt/dp/B01IXFTQCG"
+            }
+        ];
+        var cartItems = [];
+
+        function findIndex(id) {
+            for (var i = 0; i < cartItems.length; i++) {
+                if (cartItems[i].id === id)
+                    return i;
+            }
+            return -1;
+        }
+
+        function resetupResults(data) {
+            cartItems = data;
+            var cartItemsDiv = $("#cart-items");
+            cartItemsDiv.empty();
+            var sum = 0.0;
+            var templateCartItem = $("#templateCartItem");
+            for (var i = 0; i < data.length; i++) {
+                var currentItem = data[i];
+                if (currentItem != undefined && currentItem.quantity > 0) {
+                    sum += currentItem.price * currentItem.quantity;
+                    var newCartItem = templateCartItem.clone().attr("id", "cartItem" + currentItem.id);
+                    newCartItem.find("div:first-child .item-image-side").first().attr("src", currentItem.images[0]).attr("alt", currentItem.name);
+                    newCartItem.find("div:first-child .remove-item").first().attr("id", "removeItem" + currentItem.id);
+                    newCartItem.find(".item-info .item-text").first().text(currentItem.name);
+                    newCartItem.find(".item-info .item-price").first().text("$" + currentItem.price.toFixed(2));
+                    newCartItem.find(".item-info .item-quantity input").first().attr("id", "txtQuantity" + currentItem.id).val(currentItem.quantity);
+                    cartItemsDiv.append(newCartItem);
+                }
+            }
+
+            var tax = Math.round(sum * 10.25) / 100.0; // 10.25% isn't this chicago's tax?
+            var shipping = 5.0; // fixed shipping price for now
+            if (sum == 0.0)
+                shipping = 0.0;
+            var total = sum + tax + shipping;
+
+            $("#totalItemCost").text("$" + sum.toFixed(2));
+            $("#taxCost").text("$" + tax.toFixed(2));
+            $("#shippingCost").text("$" + shipping.toFixed(2));
+            $("#couponCodeCost").text("$" + (0.0).toFixed(2))
+            $("#totalCost").text("$" + total.toFixed(2));
+        }
+
+        $(document).ready(function(event) {
+            // TODO: dynamically load data based on actual cart items
+            resetupResults(allData);
+        });
+
+        function getParamterForInput(selector, name) {
+            var parameter = $(selector).val();
+            if (parameter !== undefined && parameter.trim() !== "")
+                return "?" + name + "=" + parameter.trim();
+            return "";
+        }
+
+        function searchResults() {
+            window.location.href = "search.html" + getParamterForInput("#txtSearch", "s");
+        }
+
+        $(document).on("keyup", "#txtSearch", function(event) {
+            if (event.keyCode === 13)
+                searchResults();
+        });
+
+        $(document).on("click", "#btnFit", function(event) {
+            searchResults();
+        });
+
+        $(document).on("click", "#btnCheckout", function(event) {
+            // TODO: go to address / cards page
+        });
+
+        $(document).on("click", ".remove-item", function(event) {
+            var removeItemId = event.currentTarget.id;
+            var removeItemPrefix = "removeItem";
+            var prefixIndex = removeItemId.indexOf(removeItemPrefix);
+            if (prefixIndex >= 0) {
+                removeItemId = removeItemId.substring(prefixIndex + removeItemPrefix.length);
+                var dataIndex = findIndex(removeItemId);
+                cartItems[dataIndex].quantity = 0;
+                resetupResults(cartItems);
+            }
+        });
+
+        $(document).on("focusout", ".item-quantity input", function(event) {
+            var quantityItemId = event.currentTarget.id;
+            var quantityPrefix = "txtQuantity";
+            var prefixIndex = quantityItemId.indexOf(quantityPrefix);
+            if (prefixIndex >= 0) {
+                var cartItemId = quantityItemId.substring(prefixIndex + quantityPrefix.length);
+                var dataIndex = findIndex(cartItemId);
+                if (dataIndex > -1 && !isNaN($("#" + quantityItemId).val())) {
+                    cartItems[dataIndex].quantity = parseInt($("#" + quantityItemId).val());
+                    resetupResults(cartItems);
+                }
+            }
+        })
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row top-bar bg-light">
+            <div class="col-md-3">
+                <h1 class="text-md-left text-center">FitMe</h1>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-5">
+                <div class="row text-md-right text-sm-center">
+                    <div class="col-12 text-left">
+                        <div class="input-group">
+                            <input type="text" class="form-control search" aria-label="Search Clothing Type" placeholder="Search Clothing Type" id="txtSearch">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="button" id="btnFit">Fit!</button>
+                            </div>
+                        </div>
+                        <span class="fa fa-search search-icon"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-12">
+                <div class="m-2 p-0 row" id="templateCartItem">
+                    <div class="text-center col-4">
+                        <img class="item-image-side mx-auto" src="" alt="">
+                        <button class="btn btn-outline-danger remove-item row" type="button">remove</button>
+                    </div>
+                    <div class="item-info p-2 col-8">
+                        <div class="info">
+                            <h5 class="item-text"></h5>
+                            <h6 class="item-price"></h6>
+                            <div class="item-quantity input-group">
+                                <input type="text" class="form-control" aria-label="Quantity" placeholder="1">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">x</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="cart-items">
+                    <!-- Cart items go here -->
+                </div>
+            </div>
+            <div class="col-sm-4 col-12" id="left-bar">
+                <div class="text-sm-right text-center m-2">
+                    <h6>Sum: <span id="totalItemCost">$0.00</span></h6>
+                    <h6>Tax: <span id="taxCost">$0.00</span></h6>
+                    <h6>Shipping: <span id="shippingCost">$0.00</span></h6>
+                    <h6>Coupon Code: <span id="couponCodeCost">-$0.00</span></h6>
+                    <h3>Total: <span id="totalCost">$0.00</span></h3>
+                    <div class="input-group m-2">
+                        <input type="text" class="form-control" aria-label="Coupon Code" placeholder="Coupon code">
+                    </div>
+                    <button class="btn btn-primary w-100 m-2" type="button" id="btnCheckout">Checkout</button>
+                    <button class="btn btn-primary w-100 m-2" type="button" id="btnPaypal" disabled>PayPal (Coming Soon)</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

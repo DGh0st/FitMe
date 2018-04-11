@@ -14,7 +14,7 @@
     <!-- JQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script src="bootbox.min.js"></script>
+    <script src="bootbox.min.js"></script>
 
     <title>FitMe - Search</title>
 
@@ -166,7 +166,7 @@
                         className: "btn-primary",
                         callback: function () {
                             console.log("try on clicked");
-                            bootbox.alert("try on window");
+                            bootbox.alert("try on window (coming soon)");
                         }
                     }
                 }
@@ -462,6 +462,11 @@
         $(document).on("click", "#btnFit", function(event) {
             searchResults();
         });
+
+        $(document).on("click", "#btnCart", function(event) {
+            // TODO: do stuff to send data to cart page
+            window.location.href = "cart.html";
+        });
     </script>
   </head>
   <body>
@@ -500,7 +505,7 @@
                         </div>
                         <span class="fa fa-search search-icon"></span>
                     </div>
-                    <button type="button" class="btn btn-link col-2">
+                    <button type="button" class="btn btn-link col-2" id="btnCart">
                         <span class="fa fa-shopping-cart cart-icon"></span>
                     </button>
                 </div>
