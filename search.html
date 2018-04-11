@@ -14,6 +14,7 @@
     <!-- JQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <script src="bootbox.min.js"></script>
 
     <title>FitMe - Search</title>
 
@@ -136,11 +137,77 @@
             resetupCompareItems();
         });
 
+        $(document).on("click", ".card-img-top", function () {
+            var id = this.parentNode.id;
+            var i = findIndex(id.replace("resultItem", ""));
+
+            //bootbox.alert(currentData[i].name.toString());
+            var item = currentData[i];
+
+            bootbox.dialog({
+                title: item.name,
+                message: "<img src='" + item.images + "' width='400' height='400'>" +
+                "<p>Brand: "+ item.brand +"</p>" +
+                "<p> Material: "+item.materials+"</p>"+
+                "<p> Price: S"+ item.price +"</p>",
+
+
+                buttons: {
+                    cart: {
+                        label: "Add to Cart",
+                        className: 'btn-primary',
+                        callback: function () {
+                            console.log("add to cart clicked");
+                        }
+                    },
+
+                    try: {
+                        label: "Try On",
+                        className: "btn-primary",
+                        callback: function () {
+                            console.log("try on clicked");
+                            bootbox.alert("try on window");
+                        }
+                    }
+                }
+            })
+        });
+
+        $(document).on("click", "#compare-btn", function () {
+            if(compareItems.length<2){
+
+            }
+            else {
+                bootbox.dialog({
+                    title: "Compare Items",
+                    message:
+                    "<div class='row'>" +
+                    "<div class='column'><img src='"+compareItems[0].images+"' style='width: 100%'>" +
+                    "<p>"+ compareItems[0].name+"</p><p>Brand: "+compareItems[0].brand+"</p><p>Materials: "+compareItems[0].materials+"</p><p>Price: $"+compareItems[0].price+"</p>" +
+                    "<input type='button' class='btn btn-primary add-to-cart' value='Add to Cart'>" +
+                    "</div>" +
+                    "<div class='column'><img src='"+compareItems[1].images+"' style='width: 100%'>" +
+                    "<p>"+ compareItems[1].name+"</p><p>Brand: "+compareItems[1].brand+"</p><p>Materials: "+compareItems[1].materials+"</p><p>Price: $"+compareItems[1].price+"</p>" +
+                    "<input type='button' class='btn btn-primary add-to-cart' value='Add To Cart'>" +
+                    "</div>" +
+                    "</div>",
+                    closeButton: false,
+
+                    buttons:{
+                        ok: {
+                            label: "Done",
+                            className: "btn-info",
+                        }
+                    }
+                })
+            }
+        });
+
         function resetupResults(data) {
             currentData = data;
             var searchResultsDiv = $("#search-results");
             searchResultsDiv.empty();
-            if (data.length == 1)
+            if (data.length === 1)
                 $("#numResults").text("1 result");
             else
                 $("#numResults").text(data.length + " results");
@@ -148,13 +215,13 @@
             var templateResultCard = $("#templateResultCard");
             for (var i = 0; i < data.length; i++) {
                 var currentItem = data[i];
-                if (currentItem != undefined) {
+                if (currentItem !== undefined) {
                     var newResultCard = templateResultCard.clone().attr("id", "resultItem" + currentItem.id);
                     newResultCard.find(".card-compare input[type='checkbox']").first().val(currentItem.id).attr("aria-label", "compare " + currentItem.name);
                     newResultCard.find(".card-img-top").first().attr("src", currentItem.images[0]).attr("alt", currentItem.name);
                     newResultCard.find(".card-body .card-text").first().text(currentItem.name);
                     newResultCard.find(".card-body .card-item-price").first().text("$" + currentItem.price.toFixed(2));
-                    if (currentItem.tooltip != undefined)
+                    if (currentItem.tooltip !== undefined)
                         newResultCard.find(".card-item-tooltip").first().removeClass("d-none").text(currentItem.tooltip);
                     searchResultsDiv.append(newResultCard);
                 }
@@ -201,21 +268,21 @@
                         max = currentPrice;
 
                     // Gender
-                    if (currentData[i].gender != undefined) {
+                    if (currentData[i].gender !== undefined) {
                         var currentGender = currentData[i].gender;
                         if (!genders.includes(currentGender))
                             genders.push(currentGender);
                     }
 
                     // Age
-                    if (currentData[i].age != undefined) {
+                    if (currentData[i].age !== undefined) {
                         var currentAge = currentData[i].age;
                         if (!ages.includes(currentAge))
                             ages.push(currentAge);
                     }
 
                     // Color
-                    if (currentData[i].colors != undefined) {
+                    if (currentData[i].colors !== undefined) {
                         for (var j = 0; j < currentData[i].colors.length; j++) {
                             var currentColor = currentData[i].colors[j];
                             if (!colors.includes(currentColor))
@@ -224,14 +291,14 @@
                     }
 
                     // Brand
-                    if (currentData[i].brand != undefined) {
+                    if (currentData[i].brand !== undefined) {
                         var currentBrand = currentData[i].brand;
                         if (!brands.includes(currentBrand))
                             brands.push(currentBrand);
                     }
 
                     // Material
-                    if (currentData[i].materials != undefined) {
+                    if (currentData[i].materials !== undefined) {
                         for (var j = 0; j < currentData[i].materials.length; j++) {
                             var currentMaterial = currentData[i].materials[j];
                             if (!materials.includes(currentMaterial))
@@ -418,7 +485,7 @@
                         <!-- Items selected for compare items go here -->
                     </div>
                     <div class="compare-items-btn ml-2 mr-auto mb-sm-3 mb-md-0 mb-3">
-                        <input class="btn btn-primary d-none" type="submit" value="Compare">
+                        <input class="btn btn-primary d-none" type="submit" value="Compare" id="compare-btn">
                     </div>
                 </div>
             </div>
