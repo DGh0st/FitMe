@@ -172,3 +172,12 @@ input[type="range"]:hover {
 #templateResultCard {
     display: none;
 }
+
+.row{
+    display: flex;
+}
+
+.column{
+    flex: 50%;
+    padding: 5px;
+}
