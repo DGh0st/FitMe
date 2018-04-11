@@ -149,7 +149,7 @@
                 message: "<img src='" + item.images + "' width='400' height='400'>" +
                 "<p>Brand: "+ item.brand +"</p>" +
                 "<p> Material: "+item.materials+"</p>"+
-                "<p> Price: S"+ item.price +"</p>",
+                "<p> Price: $"+ item.price +"</p>",
 
 
                 buttons: {
@@ -166,7 +166,26 @@
                         className: "btn-primary",
                         callback: function () {
                             console.log("try on clicked");
-                            bootbox.alert("try on window (coming soon)");
+                            bootbox.dialog({
+                                title: "Try On "+ item.name,
+                                message:  "<img src='test.jpg' width='400' height='400'>",
+                                closeButton: false,
+
+                                buttons:{
+                                    cart: {
+                                        label: "Add to Cart",
+                                        className: 'btn-primary',
+                                        callback: function () {
+                                            console.log("add to cart clicked");
+                                        }
+                                    },
+
+                                    cancel: {
+                                        label: 'Done',
+                                        className: 'btn-danger'
+                                    }
+                                }
+                            });
                         }
                     }
                 }
