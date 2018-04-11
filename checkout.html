@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- FontAwesome CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- JQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <title>FitMe - Check out</title>
+
+    <link href="css/checkout.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row top-bar bg-light">
+            <div class="col-md-3">
+                <h1 class="text-md-left text-center">FitMe</h1>
+            </div>
+            <div class="col-md-3">
+                <span class="payment-text"> Payment Information </span>
+            </div>
+        </div>
+        <div class"row">
+            <div class="col-md-8" id="FirstColumn">
+                <!-- Middle Column-->
+                    <input type="text" aria-label="First Name" placeholder="First Name" size="15" id="txtFirtName">
+                    <input type="text" aria-label="Last Name" placeholder="Last Name" size="15" id="txtLastName"> <br>
+                    
+                    <label width="100px">First Name</label> <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-->
+                    <label>Last Name</label>  <br>
+
+                    <input type="text" aria-label="Address Line 1" placeholder="Address Line 1" size="30" id="txtAddLine1"> <br>
+                    <label>Address Line 1</label> <br>
+                    
+                    <input type="text" aria-label="Address Line 2" placeholder="Address Line 2" size="30" id="txtAddLine2"> <br>
+                    <label>Address Line 2</label> <br>
+
+                    <input type="text" aria-label="City" placeholder="City" size="11" id="txtCity">
+                    <input type="text" aria-label="State" placeholder="State" size="2" id="txtState">
+                    <input type="text" aria-label="Zip Code" placeholder="Zip Code" size="5" id="txtZipCode"> <br>
+
+                    <label> City </label> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                    <label> State </label> &nbsp;&nbsp;&nbsp; &nbsp;
+                    <label> Zip Code </label> <br>
+
+                    <input type="text" aria-label="Credit Number" placeholder="1234 1234 1234 1234" size="20" id="txtCreditNum"> <br>
+                    <label> Credit Card Number </label> <br>
+
+                    <input type="text" aria-label="Exp" placeholder="MM/YY" size="5" id="txtExp"> 
+                    <input type="text" aria-label="CVV" placeholder="123" size="3" id="txtCVV"> <br>
+
+                    <label> Expire </label> 
+                    <label> CVV </label> <br>
+
+                    <input type="text" aria-label="Exp" placeholder="Name on Card" size="30" id="txtCardName"> <br>
+                    <label> Name on Card </label> <br>
+
+            </div>
+            <div class="col-md-4" id="SecondColumn">
+                <!-- Second Column-->
+                <label> Total: </label> 
+                <!-- Total Price -->
+                <br>
+                <input class = "btn" type = "button" id="btnConfirm" value = "Confirm"></input>
+                <br>
+                <input class = "btn" type = "button" id="btnCancel" value = "Cancel"></input>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
