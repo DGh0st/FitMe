@@ -5,5 +5,30 @@ html {
 .payment-text{
     font-size: 30px;
     font-weight: bold;
-    color: blue;
+}
+
+#left-bar {
+    min-height: calc(100vh - 64px);
+
+    display: flex;
+    align-items: flex-end;
+}
+
+@media (min-width: 768px) {
+    #left-bar div {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #left-bar {
+        min-height: unset !important;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    #left-bar {
+        min-height: calc(100vh - 100px)
+    }
 }

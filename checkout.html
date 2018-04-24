@@ -37,54 +37,108 @@
             <div class="col-md-3">
                 <h1 class="text-md-left text-center">FitMe</h1>
             </div>
-            <div class="col-md-3">
-                <span class="payment-text"> Payment Information </span>
-            </div>
         </div>
-        <div class"row">
-            <div class="col-md-8" id="FirstColumn">
-                <!-- Middle Column-->
-                    <input type="text" aria-label="First Name" placeholder="First Name" size="15" id="txtFirtName">
-                    <input type="text" aria-label="Last Name" placeholder="Last Name" size="15" id="txtLastName"> <br>
-                    
-                    <label width="100px">First Name</label> <!-- &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-->
-                    <label>Last Name</label>  <br>
+        <div class="row">
+            <div class="col-md-8 col-12 px-5">
+                <div class="row">
+                    <span class="col-12 payment-text">Shipping Address</span>
+                </div>
+                <hr>
 
-                    <input type="text" aria-label="Address Line 1" placeholder="Address Line 1" size="30" id="txtAddLine1"> <br>
-                    <label>Address Line 1</label> <br>
-                    
-                    <input type="text" aria-label="Address Line 2" placeholder="Address Line 2" size="30" id="txtAddLine2"> <br>
-                    <label>Address Line 2</label> <br>
+                <div class="mx-3">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">First and last name</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="John" id="txtFirstName">
+                        <input type="text" class="form-control" placeholder="Doe" id="txtLastName">
+                    </div>
 
-                    <input type="text" aria-label="City" placeholder="City" size="11" id="txtCity">
-                    <input type="text" aria-label="State" placeholder="State" size="2" id="txtState">
-                    <input type="text" aria-label="Zip Code" placeholder="Zip Code" size="5" id="txtZipCode"> <br>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Address Line 1</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="123 Main St" id="txtAddressLine1">
+                    </div>
 
-                    <label> City </label> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-                    <label> State </label> &nbsp;&nbsp;&nbsp; &nbsp;
-                    <label> Zip Code </label> <br>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Address Line 2</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Apt # 3" id="txtAddressLine2">
+                    </div>
 
-                    <input type="text" aria-label="Credit Number" placeholder="1234 1234 1234 1234" size="20" id="txtCreditNum"> <br>
-                    <label> Credit Card Number </label> <br>
+                    <div class="row">
+                        <div class="input-group mb-3 col-lg-4 col-md-6 col-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">City</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Anytown" id="txtCity">
+                        </div>
 
-                    <input type="text" aria-label="Exp" placeholder="MM/YY" size="5" id="txtExp"> 
-                    <input type="text" aria-label="CVV" placeholder="123" size="3" id="txtCVV"> <br>
+                        <div class="input-group mb-3 col-lg-4 col-md-6 col-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">State</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="CA" id="txtState">
+                        </div>
 
-                    <label> Expire </label> 
-                    <label> CVV </label> <br>
+                        <div class="input-group mb-3 col-lg-4 col-md-6 col-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Zip Code</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="123456" id="txtZipCode">
+                        </div>
+                    </div>
+                </div>
 
-                    <input type="text" aria-label="Exp" placeholder="Name on Card" size="30" id="txtCardName"> <br>
-                    <label> Name on Card </label> <br>
+                <div class="row">
+                    <span class="col-12 payment-text">Payment Information</span>
+                </div>
+                <hr>
 
+                <div class="mx-3">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Name On Card</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="John" id="txtCardFirstName">
+                        <input type="text" class="form-control" placeholder="Doe" id="txtCardLastName">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Card Number</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="1234" id="txtCreditNumOne">
+                        <input type="text" class="form-control" placeholder="1234" id="txtCreditNumTwo">
+                        <input type="text" class="form-control" placeholder="1234" id="txtCreditNumThree">
+                        <input type="text" class="form-control" placeholder="1234" id="txtCreditNumFour">
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group mb-3 col-md-6 col-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Expiration Date</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="MM/YY" id="txtExp">
+                        </div>
+
+                        <div class="input-group mb-3 col-md-6 col-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">CVV</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="123" id="txtCVV">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4" id="SecondColumn">
-                <!-- Second Column-->
-                <label> Total: </label> 
-                <!-- Total Price -->
-                <br>
-                <input class = "btn" type = "button" id="btnConfirm" value = "Confirm"></input>
-                <br>
-                <input class = "btn" type = "button" id="btnCancel" value = "Cancel"></input>
+            <div class="col-md-4 col-12" id="left-bar">
+                <div class="text-md-right text-center m-2">
+                    <h3>Total: <span id="totalCost">$0.00</span></h3>
+                    <button class="btn btn-primary w-100 m-2" type="button" id="btnConfirm">Confirm</button>
+                    <button class="btn btn-primary w-100 m-2" type="button" id="btnCancel">Cancel</button>
+                </div>
             </div>
         </div>
     </div>

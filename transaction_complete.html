@@ -35,6 +35,11 @@
             100% { transform: scaleX(1) scaleY(1); }
         }
     </style>
+    <script type="text/javascript">
+        $(document).on("click", "#btnBackToShopping", function(event) {
+            window.location.href = "search.html";
+        })
+    </script>
   </head>
   <body>
     <div class="container-fluid">
@@ -48,7 +53,7 @@
                 <h1 id="transactionTotal">$0.00</h1>
                 <i class="fa fa-check-circle"></i>
                 <h2>Transaction Complete</h2>
-                <a href="search.html" type="button" class="btn btn-primary">Back to shopping</a>
+                <button class="btn btn-primary" id="btnBackToShopping">Back to shopping</button>
             </div>
         </div>
     </div>
