@@ -17,6 +17,7 @@
 
     <title>FitMe - Transaction Complete</title>
 
+    <link href="css/all.css" rel="stylesheet">
     <link href="css/search.css" rel="stylesheet">
 
     <style type="text/css">
@@ -39,13 +40,17 @@
         $(document).on("click", "#btnBackToShopping", function(event) {
             window.location.href = "search.html";
         })
+        
+        $(document).on("click", "#btnTitle", function(event) {
+            window.location.href = "index.html";
+        });
     </script>
   </head>
   <body>
     <div class="container-fluid">
         <div class="row top-bar bg-light">
             <div class="col">
-                <h1 class="text-md-left text-center">FitMe</h1>
+                <h1 class="text-md-left text-center" id="btnTitle">FitMe</h1>
             </div>
         </div>
         <div class="row content">

@@ -17,6 +17,7 @@
 
     <title>FitMe - Cart</title>
 
+    <link href="css/all.css" rel="stylesheet">
     <link href="css/cart.css" rel="stylesheet">
 
     <script type="text/javascript">
@@ -147,14 +148,18 @@
                     resetupResults(cartItems);
                 }
             }
-        })
+        });
+
+        $(document).on("click", "#btnTitle", function(event) {
+            window.location.href = "index.html";
+        });
     </script>
   </head>
   <body>
     <div class="container-fluid">
         <div class="row top-bar bg-light">
             <div class="col-md-3">
-                <h1 class="text-md-left text-center">FitMe</h1>
+                <h1 class="text-md-left text-center" id="btnTitle">FitMe</h1>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-5">
