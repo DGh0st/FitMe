@@ -160,6 +160,7 @@
                         label: "Add to Cart",
                         className: 'btn-primary',
                         callback: function () {
+                            bootbox.alert("Added to Cart");
                             console.log("add to cart clicked");
                         }
                     },
@@ -206,6 +207,7 @@
                                         className: 'btn-primary',
                                         callback: function () {
                                             console.log("add to cart clicked");
+                                            bootbox.alert("Added to Cart!");
                                         }
                                     },
 
@@ -237,7 +239,7 @@
                     "<div class='row'>" +
                     "<div class='column'><img src='"+compareItems[0].images+"' style='width: 100%'>" +
                     "<p>"+ compareItems[0].name+"</p><p>Brand: "+compareItems[0].brand+"</p><p>Materials: "+compareItems[0].materials+"</p><p>Price: $"+compareItems[0].price+"</p>" +
-                    "<input type='button' class='btn btn-primary add-to-cart' value='Add to Cart'>" +
+                    "<input type='button' class='btn btn-primary add-to-cart' value='Add to Cart' onclick='compareCartClciked()'>" +
                     "</div>" +
                     "<div class='column'><img src='"+compareItems[1].images+"' style='width: 100%'>" +
                     "<p>"+ compareItems[1].name+"</p><p>Brand: "+compareItems[1].brand+"</p><p>Materials: "+compareItems[1].materials+"</p><p>Price: $"+compareItems[1].price+"</p>" +
@@ -506,6 +508,11 @@
 
         function searchResults() {
             window.location.href = "search.html" + getParamterForInput("#txtSearch", "s");
+        }
+
+        function compareCartClciked() {
+            bootbox.hideAll();
+            bootbox.alert("Added to Cart");
         }
 
         $(document).on("keyup", "#txtSearch", function(event) {
