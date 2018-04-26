@@ -151,6 +151,8 @@
                 "<p>Brand: "+ item.brand +"</p>" +
                 "<p> Material: "+item.materials+"</p>"+
                 "<p> Price: $"+ item.price +"</p>",
+                closeButton: false,
+                backdrop: true,
 
 
                 buttons: {
@@ -169,8 +171,34 @@
                             console.log("try on clicked");
                             bootbox.dialog({
                                 title: "Try On "+ item.name,
-                                message:  "<img src='test.jpg' width='400' height='400'>",
+                                message:  "<img src='test.jpg' width='400' height='400'><div class=\"row\">\n" +
+                                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"chest\">\n" +
+                                "                    <div class=\"input-group-prepend\">\n" +
+                                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Chest</span>\n" +
+                                "                    </div>\n" +
+                                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                                "                </div>\n" +
+                                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"waist\">\n" +
+                                "                    <div class=\"input-group-prepend\">\n" +
+                                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Waist</span>\n" +
+                                "                    </div>\n" +
+                                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                                "                </div>\n" +
+                                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"hips\">\n" +
+                                "                    <div class=\"input-group-prepend\">\n" +
+                                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Hips</span>\n" +
+                                "                    </div>\n" +
+                                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                                "                </div>\n" +
+                                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"height\">\n" +
+                                "                    <div class=\"input-group-prepend\">\n" +
+                                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Height</span>\n" +
+                                "                    </div>\n" +
+                                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                                "                </div>\n" +
+                                "            </div>",
                                 closeButton: false,
+                                backdrop: true,
 
                                 buttons:{
                                     cart: {
@@ -188,6 +216,11 @@
                                 }
                             });
                         }
+                    },
+
+                    cancel:{
+                        label: "Done",
+                        className: "btn-danger"
                     }
                 }
             })
@@ -212,6 +245,7 @@
                     "</div>" +
                     "</div>",
                     closeButton: false,
+                    backdrop: true,
 
                     buttons:{
                         ok: {

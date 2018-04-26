@@ -84,6 +84,39 @@
         $(document).on("click", "#btnFit", function(event) {
             searchResults();
         });
+
+        function signUp(){
+            bootbox.dialog({
+                title: "Sign Up!",
+                message:
+                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"chest\">\n" +
+                "                    <div class=\"input-group-prepend\">\n" +
+                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Email</span>\n" +
+                "                    </div>\n" +
+                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                "                </div>\n" +
+                "                <div class=\"input-group input-group-sm col-md-3 mb-3\" id=\"waist\">\n" +
+                "                    <div class=\"input-group-prepend\">\n" +
+                "                        <span class=\"input-group-text\" id=\"basic-addon3\">Password</span>\n" +
+                "                    </div>\n" +
+                "                    <input type=\"text\" class=\"form-control\" id=\"basic-url\" aria-describedby=\"basic-addon3\">\n" +
+                "                </div>",
+                closeButton: false,
+
+                buttons:{
+                    ok: {
+                        label: "Done",
+                        className: "btn-primary"
+                    },
+
+                    cancel: {
+                        label: "Cancel",
+                        className: "btn-danger"
+                    }
+                }
+            });
+        }
+
     </script>
   </head>
   <body>
@@ -127,6 +160,9 @@
                 <div class="input-group input-group-lg">
                     <input class="btn btn-secondary btn-lg mx-auto" id="btnFit" type="submit" value="Fit!">
                 </div>
+            </div>
+            <div class="row">
+                <p>To save measurements <a href="javascript:signUp();">Create an Account!</a></p>
             </div>
         </div>
     </div>
